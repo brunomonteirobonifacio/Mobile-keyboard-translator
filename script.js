@@ -33,26 +33,33 @@ function translateLetter() {
     } else if (textToTranslate[0] !== '7' && textToTranslate[0] !== '9' && textToTranslate.length > 3) {
         alert("The Maximum number of characters for those numbers is 3!");
         translatedText.value = "";
-    } else {                                // this whole section is about JS finding out where to start counting the asciiCode from
-        if (textToTranslate[0] === '2'){    // there was probably a more efficient way but I didn't know
-        asciiCode = 65;
-    } if (textToTranslate[0] === '3') {
-        asciiCode = 68;
-    } if (textToTranslate[0] === '4') {
-        asciiCode = 71;
-    } if (textToTranslate[0] === '5') {
-        asciiCode = 74;
-    } if (textToTranslate[0] === '6') {
-        asciiCode = 77;
-    } if (textToTranslate[0] === '7') {
-        asciiCode = 80;
-    } if (textToTranslate[0] === '8') {
-        asciiCode = 84;
-    } if (textToTranslate[0] === '9') {
-        asciiCode = 87;
+    } else switch (textToTranslate[0]){                                // this whole section is about JS finding out where to start counting the asciiCode from
+        case '2':    // there was probably a more efficient way but I didn't know
+            asciiCode = 65;
+        break;
+        case '3':
+            asciiCode = 68;
+        break;
+        case '4':
+            asciiCode = 71;
+        break;
+        case '5':
+            asciiCode = 74;
+        break;
+        case '6':
+            asciiCode = 77;
+        break;
+        case '7':
+            asciiCode = 80;
+        break;
+        case '8':
+            asciiCode = 84;
+        break;
+        case '9':
+            asciiCode = 87;
+        break;
     }
         asciiCode += textToTranslate.length-1;
         translatedText.value = String.fromCharCode(asciiCode);
-    }
     document.getElementById("text").value = "";
 }
