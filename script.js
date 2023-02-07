@@ -1,101 +1,135 @@
 function translateText () {
-    let textToTranslate = document.getElementById("text").value;
-    let translatedText = document.getElementById("result");
-    let splitTextToTranslate = new Array();
-    let textLength = textToTranslate.length;
-    var j = 0;  // j var refers to textToTranslate
-
-    for (i = 0; i < textLength; i++) {   // i var refers to the SplitTextToTranslate array
-        splitTextToTranslate.push(textToTranslate[j]);  // creates a new element
-        if ((textToTranslate[j+1] !== " ") && (textToTranslate[j+1] !== "")) {  // checks to see if there's anything else to add in the element
-            while (textToTranslate[j] !== " " && j !== textLength) {   // separating number groups
-                splitTextToTranslate[i] += textToTranslate[j];
-                j++;    // incrementing the string position
+    let textToTranslate = document.getElementById("text").value.trim();
+    let translatedTextOutput = document.getElementById("result");
+    let translatedText = [''];
+    let splitTextToTranslate = textToTranslate.split(" ");
+    let asciiCode;
+    let def = false;
+    let higherThanLimit = false;    // checks whether the number group lenght is higher than the limit
+    let numberGroup;
+    
+    translatedTextOutput.value = "";
+    
+    for (i = 0; i < splitTextToTranslate.length && !def && !higherThanLimit; i++) { // goes through the whole array while there's no error
+        numberGroup = splitTextToTranslate[i];  //  numberGroup = group of numbers in i position
+        console.log(numberGroup);
+        for (j = 0; !def && j < numberGroup.length; j++) {
+            if (numberGroup[j] !== numberGroup[j+1] && j+1 !== numberGroup.length) {    // checks if all numbers in the number group are the same
+                def = true;
             }
-        } else { 
-            j++;
         }
-        console.log(splitTextToTranslate);
-        j++;
-        textLength--;
-        // both i and j vars skipping the space characters 
+        let threeDigitAllowed = ['2','3','4','5','6','8'];
+        if ((numberGroup[0] in threeDigitAllowed && numberGroup.length > 3) || numberGroup.length > 4) {
+           document.getElementById("text").value = ""; // <= textToTranslate
+           translatedTextOutput.value = "";
+           higherThanLimit = true; // higherThanLimit checks whether the number of characters is higher than the limit allowed
+        } else {
+            switch (numberGroup[0]) {
+                case '2':
+                    asciiCode = 65;
+                break;
+                case '3':
+                    asciiCode = 68;
+                break;
+                case '4':
+                    asciiCode = 71;
+                break;
+                case '5':
+                    asciiCode = 74;
+                break;
+                case '6':
+                    asciiCode = 77;
+                break;
+                case '7':
+                    asciiCode = 80;
+                break;
+                case '8':
+                    asciiCode = 84;
+                break;
+                case '9':
+                    asciiCode = 87;
+                break;
+                default:  
+                    def = true;
+                    document.getElementById("text").value = ""; 
+             } 
+        }  if (!def && !higherThanLimit) {         // checks if default case case was activated
+            asciiCode += numberGroup.length-1;
+            translatedText[i] = [''];   // <= withouth this line it would always print "undentified"+letter
+            translatedText[i] += String.fromCharCode(asciiCode);
+        } 
     }
-}
+    
+    if (def) {
+        alert("Invalid character typed. Only numbers from 2 to 9 are valid, and number groups cannot have different numbers");
+        document.getElementById("text").value = ""; // <= textToTranslate
+        translatedTextOutput.value = "";
+    } if (higherThanLimit) {
+        alert("One of the number groups is higher than the limit allowed");
+        document.getElementById("text").value = ""; // <= textToTranslate
+        translatedTextOutput.value = "";
+    } else {
+        translatedTextOutput.value = translatedText.join(" ");
+    }
+}  
 
 function translateLetter() {
     let textToTranslate = document.getElementById("text").value;
     let translatedText = document.getElementById("result");
     let asciiCode;
+    let def = false;
 
-   switch (textToTranslate[0]){         // this whole section is about JS finding out where to start counting the asciiCode from
-        default:                        // there was probably a more efficient way but I didn't know
-            alert("Invalid character typed (only numbers from 2 to 9 are valid)") 
-            translatedText.value = "";    
-            document.getElementById("text").value = "";
-            return
-        break;                           
-        case '2':
-            if (textToTranslate.length > 3) {
-                alert('Only numbers 7 and 9 can have 4 digits');
-                document.getElementById("text").value = "";
-                translatedText.value = "";
-                return;
-            }                      
-            asciiCode = 65;
-        break;
-        case '3':
-            if (textToTranslate.length > 3) {
-                alert('Only numbers 7 and 9 can have 4 digits');
-                document.getElementById("text").value = "";
-                translatedText.value = "";
-                return
-            } 
-            asciiCode = 68;
-        break;
-        case '4':
-            if (textToTranslate.length > 3) {
-                alert('Only numbers 7 and 9 can have 4 digits');
-                document.getElementById("text").value = "";
-                translatedText.value = "";
-                return
-            } 
-            asciiCode = 71;
-        break;
-        case '5':
-            if (textToTranslate.length > 3) {
-                alert('Only numbers 7 and 9 can have 4 digits');
-                document.getElementById("text").value = "";
-                translatedText.value = "";
-                return
-            } 
-            asciiCode = 74;
-        break;
-        case '6':
-            if (textToTranslate.length > 3) {
-                alert('Only numbers 7 and 9 can have 4 digits');
-                document.getElementById("text").value = "";
-                translatedText.value = "";
-                return
-            } 
-            asciiCode = 77;
-        break;
-        case '7':
-            asciiCode = 80;
-        break;
-        case '8':
-            if (textToTranslate.length > 3) {
-                alert('Only numbers 7 and 9 can have 4 digits');
-                document.getElementById("text").value = "";
-                translatedText.value = "";
-                return
-            } 
-            asciiCode = 84;
-        break;
-        case '9':
-            asciiCode = 87;
-        break;
-    }
+    if (textToTranslate[0] !== '7' && textToTranslate[0] !=='9' && textToTranslate.length > 3) {
+        alert('Only numbers 7 and 9 can have 4 digits');
+        document.getElementById("text").value = "";
+        translatedText.value = "";
+        def = true;
+    } else {
+        switch (textToTranslate[0]) {        // this whole section is about JS finding out where to start counting the asciiCode from 
+             case '2':                          // there was probably a more efficient way but I didn't know                          
+                 asciiCode = 65;
+             break;
+             case '3':
+                 asciiCode = 68;
+             break;
+             case '4':
+                 asciiCode = 71;
+             break;
+             case '5':
+                 asciiCode = 74;
+             break;
+             case '6':
+                 asciiCode = 77;
+             break;
+             case '7':
+                 asciiCode = 80;
+             break;
+             case '8':
+                 asciiCode = 84;
+             break;
+             case '9':
+                 asciiCode = 87;
+             break;
+             default:  
+                 alert("Invalid character typed (only numbers from 2 to 9 are valid)"); 
+                 def = true;
+                 document.getElementById("text").value = ""; 
+        }
+    } if (!def) {         // checks if default case was activated
         asciiCode += textToTranslate.length-1;
         translatedText.value = String.fromCharCode(asciiCode);
+    }
     document.getElementById("text").value = "";
+}
+
+function callTranslateTextByEnter() {
+    if (event.keyCode === 13) {
+        translateText();
+    }
+}
+
+function callTranslateLetterByEnter() {
+    if (event.keyCode === 13) {
+        translateLetter();
+    }
 }
