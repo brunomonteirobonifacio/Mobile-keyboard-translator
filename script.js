@@ -27,32 +27,68 @@ function translateLetter() {
     let translatedText = document.getElementById("result");
     let asciiCode;
 
-    if ((textToTranslate[0] !== '2') && (textToTranslate[0] !== '3') && (textToTranslate[0] !== '4') && (textToTranslate[0] !== '5') && (textToTranslate[0] !== '6') && (textToTranslate[0] !== '7') && (textToTranslate[0] !== '8') && (textToTranslate[0] !== '9')){
-        alert("Invalid character typed (only numbers from 2 to 9 are valid)");
-        translatedText.value = "";
-    } else if (textToTranslate[0] !== '7' && textToTranslate[0] !== '9' && textToTranslate.length > 3) {
-        alert("The Maximum number of characters for those numbers is 3!");
-        translatedText.value = "";
-    } else switch (textToTranslate[0]){                                // this whole section is about JS finding out where to start counting the asciiCode from
-        case '2':    // there was probably a more efficient way but I didn't know
+   switch (textToTranslate[0]){         // this whole section is about JS finding out where to start counting the asciiCode from
+        default:                        // there was probably a more efficient way but I didn't know
+            alert("Invalid character typed (only numbers from 2 to 9 are valid)") 
+            translatedText.value = "";    
+            document.getElementById("text").value = "";
+            return
+        break;                           
+        case '2':
+            if (textToTranslate.length > 3) {
+                alert('Only numbers 7 and 9 can have 4 digits');
+                document.getElementById("text").value = "";
+                translatedText.value = "";
+                return;
+            }                      
             asciiCode = 65;
         break;
         case '3':
+            if (textToTranslate.length > 3) {
+                alert('Only numbers 7 and 9 can have 4 digits');
+                document.getElementById("text").value = "";
+                translatedText.value = "";
+                return
+            } 
             asciiCode = 68;
         break;
         case '4':
+            if (textToTranslate.length > 3) {
+                alert('Only numbers 7 and 9 can have 4 digits');
+                document.getElementById("text").value = "";
+                translatedText.value = "";
+                return
+            } 
             asciiCode = 71;
         break;
         case '5':
+            if (textToTranslate.length > 3) {
+                alert('Only numbers 7 and 9 can have 4 digits');
+                document.getElementById("text").value = "";
+                translatedText.value = "";
+                return
+            } 
             asciiCode = 74;
         break;
         case '6':
+            if (textToTranslate.length > 3) {
+                alert('Only numbers 7 and 9 can have 4 digits');
+                document.getElementById("text").value = "";
+                translatedText.value = "";
+                return
+            } 
             asciiCode = 77;
         break;
         case '7':
             asciiCode = 80;
         break;
         case '8':
+            if (textToTranslate.length > 3) {
+                alert('Only numbers 7 and 9 can have 4 digits');
+                document.getElementById("text").value = "";
+                translatedText.value = "";
+                return
+            } 
             asciiCode = 84;
         break;
         case '9':
