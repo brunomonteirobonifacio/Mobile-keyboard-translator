@@ -18,8 +18,7 @@ function translateText () {
                 def = true;
             }
         }
-        let threeDigitAllowed = ['2','3','4','5','6','8'];
-        if ((numberGroup[0] in threeDigitAllowed && numberGroup.length > 3) || numberGroup.length > 4) {
+        if ((numberGroup[0] === '2' || numberGroup[0] === '3' || numberGroup[0] === '4' || numberGroup[0] === '5' || numberGroup[0] === '6' || numberGroup[0] === '8' && numberGroup.length > 3)  ^ numberGroup.length > 4) {
            document.getElementById("text").value = ""; // <= textToTranslate
            translatedTextOutput.value = "";
            higherThanLimit = true; // higherThanLimit checks whether the number of characters is higher than the limit allowed
